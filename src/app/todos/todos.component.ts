@@ -20,6 +20,8 @@ export class TodosComponent implements OnInit {
     this.service.fetchTodos()
       .subscribe(Response => {
         this.todosArray = Response.json();
+        console.log(this.todosArray);
+        
       })
   }
 
@@ -43,34 +45,44 @@ export class TodosComponent implements OnInit {
     // post ot the server
     this.service.addTodo(newTodo)
       .subscribe(Response => {
-        console.log("new Todo Added");
+        let newTodoId = Response.json()._id;
         // add the id to the
+        newTodo['_id'] = newTodoId;
       })
-  }
-
-  completeTodo(index) {
-    let completedTodo = this.todosArray.splice(index, 1);
-    // call the method from the service and pass the todo
-    this.service.completeTodo(completedTodo);
-
-  }
-  
-
-  deleteTodo(index) {
-    this.todosArray.splice(index, 1);
-    // and some delete req to the server
-  }
-
-  testFunc(test: HTMLInputElement) {
     
-    let postObj = {
-      "title": test.value,
-      "desc": ''
-    } 
-    console.log(postObj);
-    this.http.post('http://localhost:3000/api/todos', postObj)
+    f.reset();
+  }
+
+  completeTodo(todo) {
+    // find the index of the todo that was passed in
+    let index = this.todosArray.indexOf(todo);
+    // splice it out
+    this.todosArray.splice(index, 1);
+    // Get the ID of the obj
+    let id = todo._id;
+    // change the status
+    todo.status = 'Complete';   
+    // put HTTP req
+    this.service.completeTodo(id, todo)
       .subscribe(Response => {
         console.log(Response);        
       })
+
+  }  
+
+  deleteTodo(todo) {
+    // find the index of the todo that was passed in
+    let index = this.todosArray.indexOf(todo);
+    // splice it out
+    let deletedTodo = {};
+    deletedTodo = this.todosArray.splice(index, 1);
+    // Get the ID of the obj
+    let id = deletedTodo[0]['_id'];
+    // delete HTTP req
+    this.service.deleteTodo(id)
+      .subscribe(Response => {
+        console.log(Response);
+      })
   }
+
 }

@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { Http } from '@angular/Http';
 
 
 @Injectable()
 export class DataWorkerService {
 
-  public completedTodo = new Subject<any>();
-
+  private _url = "http://localhost:3000/api/todos";
   constructor(private http: Http) { }
 
-  completeTodo(todo) {
-    this.completedTodo.next(todo);
+  completeTodo(id, todo) {
+    return this.http.put(this._url + '/update/' + id, todo);
   }
 
   fetchTodos() {
-    return this.http.get('http://localhost:3000/api/todos');
+    return this.http.get(this._url);
   }
 
   addTodo(todo){
-    return this.http.post('http://localhost:3000/api/todos', todo);
+    return this.http.post(this._url, todo);
+  }
+
+  deleteTodo(id) {
+    let _delUrl = this._url + '/' + id;
+    return this.http.delete(_delUrl);
   }
 }

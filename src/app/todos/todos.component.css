@@ -1,0 +1,13 @@
+.todo-head {
+    background: #E6E6E6;
+    padding: 7px;
+}
+
+.todo-head > div {
+    text-align: center;
+    min-height: 20px;
+}
+
+.list-group-item {
+    padding-top: 0px;
+}

@@ -13,11 +13,6 @@ export class CompletedTodosComponent implements OnInit {
   constructor(private service: DataWorkerService) { }
 
   ngOnInit() {
-    this.service.completedTodo
-      .subscribe(Response => {
-        let completedTodo = Response[0];
-        this.completedTodosArray.push(completedTodo);
-      })
   }
 
 
