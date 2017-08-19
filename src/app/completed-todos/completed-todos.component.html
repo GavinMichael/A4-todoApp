@@ -1,0 +1,15 @@
+<h2 class="jumbotron">
+    Completed Todos
+    <br>
+    <small>
+      {{ completedTodosArray.length }} Items
+    </small>
+  </h2>
+
+<h1>Completed Todos</h1>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let todo of completedTodosArray; index as i">
+      <h4>{{ todo.title }}</h4>
+      <p>{{ todo.desc }}</p>
+    </li>
+  </ul>

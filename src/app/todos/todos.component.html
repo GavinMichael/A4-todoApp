@@ -1,0 +1,29 @@
+<br>
+<form #f="ngForm" (ngSubmit)="addTodo(f)">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input ngModel #title="ngModel" type="text" name="title" id="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="desc">Desc</label>
+    <textarea ngModel #desc="ngModel" name="desc" id="desc" cols="30" rows="5" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+</form>
+
+<h2 class="jumbotron">
+  Active Todos
+  <br>
+  <small>
+    {{ todosArray?.length }} Items
+  </small>
+</h2>
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let todo of todosArray; index as i">
+    <h4>{{ todo.title }}</h4>
+    <p>{{ todo.desc }}</p>
+    <button class="btn btn-primary" (click)="completeTodo(i)">Complete</button>
+    <button class="btn btn-danger" (click)="deleteTodo(i)" >Delete</button>
+  </li>
+</ul>
